@@ -1,0 +1,308 @@
+@import "tailwindcss";
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 110px;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background: #020202;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.hero-grid {
+  background-image:
+    linear-gradient(rgba(96, 165, 250, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(96, 165, 250, 0.055) 1px, transparent 1px);
+  background-size: 65px 65px;
+  mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    black 20%,
+    black 80%,
+    transparent
+  );
+}
+
+.hero-particle {
+  animation-name: heroParticleFloat;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+.hero-network-line {
+  animation: heroLineMove 18s linear infinite;
+}
+
+.hero-network-line-delay {
+  animation-delay: -7s;
+}
+
+.hero-orbit {
+  animation: heroOrbit 20s linear infinite;
+}
+
+.hero-orbit-reverse {
+  animation: heroOrbitReverse 15s linear infinite;
+}
+
+.hero-cloud {
+  animation: heroCloudFloat 5s ease-in-out infinite;
+}
+
+.hero-floating-card {
+  animation: heroCardFloat 4.5s ease-in-out infinite;
+}
+
+.hero-floating-card-delay {
+  animation: heroCardFloat 5s ease-in-out infinite;
+  animation-delay: -2s;
+}
+
+@keyframes heroParticleFloat {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 0.35;
+  }
+
+  50% {
+    transform: translateY(-45px) scale(1.4);
+    opacity: 1;
+  }
+}
+
+@keyframes heroLineMove {
+  from {
+    stroke-dashoffset: 0;
+  }
+
+  to {
+    stroke-dashoffset: -200;
+  }
+}
+
+@keyframes heroOrbit {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes heroOrbitReverse {
+  from {
+    transform: rotate(360deg);
+  }
+
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes heroCloudFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-18px);
+  }
+}
+
+@keyframes heroCardFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-particle,
+  .hero-network-line,
+  .hero-orbit,
+  .hero-orbit-reverse,
+  .hero-cloud,
+  .hero-floating-card,
+  .hero-floating-card-delay {
+    animation: none;
+  }
+}
+
+.hero-grid {
+  background-image:
+    linear-gradient(rgba(96, 165, 250, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(96, 165, 250, 0.045) 1px, transparent 1px);
+  background-size: 65px 65px;
+  mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    black 18%,
+    black 82%,
+    transparent
+  );
+}
+
+.hero-particle {
+  animation-name: heroParticleFloat;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+.hero-network-line {
+  animation: heroLineMove 18s linear infinite;
+}
+
+.hero-network-line-delay {
+  animation-delay: -7s;
+}
+
+.hero-cloud {
+  animation: heroCloudFloat 5s ease-in-out infinite;
+}
+
+.hero-floating-card {
+  animation: heroCardFloat 4.5s ease-in-out infinite;
+}
+
+.hero-floating-card-delay {
+  animation: heroCardFloat 5s ease-in-out infinite;
+  animation-delay: -2s;
+}
+
+.hero-node-float {
+  animation: heroNodeFloat 4s ease-in-out infinite;
+}
+
+.hero-node-float-delay {
+  animation: heroNodeFloat 4.8s ease-in-out infinite;
+  animation-delay: -1.5s;
+}
+
+.hero-node-float-slow {
+  animation: heroNodeFloat 5.2s ease-in-out infinite;
+  animation-delay: -2.5s;
+}
+
+@keyframes heroParticleFloat {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 0.35;
+  }
+
+  50% {
+    transform: translateY(-42px) scale(1.35);
+    opacity: 1;
+  }
+}
+
+@keyframes heroLineMove {
+  from {
+    stroke-dashoffset: 0;
+  }
+
+  to {
+    stroke-dashoffset: -210;
+  }
+}
+
+@keyframes heroCloudFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+@keyframes heroCardFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes heroNodeFloat {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+
+  50% {
+    transform: translateY(-8px) scale(1.03);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-particle,
+  .hero-network-line,
+  .hero-cloud,
+  .hero-floating-card,
+  .hero-floating-card-delay,
+  .hero-node-float,
+  .hero-node-float-delay,
+  .hero-node-float-slow {
+    animation: none;
+  }
+}
+/* ABOUT SECTION */
+.about-grid {
+  background-image:
+    linear-gradient(rgba(96, 165, 250, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(96, 165, 250, 0.035) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    black 12%,
+    black 88%,
+    transparent
+  );
+}
+
+.about-image-card {
+  box-shadow:
+    0 30px 80px rgba(0, 0, 0, 0.25),
+    0 0 0 1px rgba(255, 255, 255, 0.02);
+}
+
+.about-image-card::after {
+  content: "";
+  position: absolute;
+  inset: auto 10% -1px;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(96, 165, 250, 0.7),
+    rgba(255, 153, 0, 0.5),
+    transparent
+  );
+}
