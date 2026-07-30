@@ -269,41 +269,140 @@ function Hero() {
           </div>
 
           {/* Central cloud — higher z-index than orbit */}
-          <div className="hero-cloud relative z-20 flex h-[250px] w-[320px] items-center justify-center sm:h-[340px] sm:w-[450px] lg:h-[390px] lg:w-[520px]">
-            {/* Cloud base */}
-            <div className="absolute bottom-[43px] left-[27px] h-[115px] w-[270px] rounded-[80px] border border-blue-300/45 bg-blue-500/15 shadow-[0_0_65px_rgba(59,130,246,0.35),inset_0_0_45px_rgba(96,165,250,0.12)] backdrop-blur-xl sm:bottom-[58px] sm:left-[42px] sm:h-[145px] sm:w-[380px] lg:bottom-[66px] lg:left-[48px] lg:h-[165px] lg:w-[430px]" />
+             <div className="hero-cloud relative z-20 flex h-[250px] w-[320px] items-center justify-center sm:h-[340px] sm:w-[450px] lg:h-[390px] lg:w-[520px]">
+  {/* Soft glow behind cloud */}
+  <div className="pointer-events-none absolute inset-[12%] rounded-full bg-blue-500/10 blur-[55px]" />
 
-            {/* Cloud left circle */}
-            <div className="absolute left-[50px] top-[73px] h-[125px] w-[125px] rounded-full border border-blue-300/40 bg-blue-500/15 shadow-[0_0_55px_rgba(37,99,235,0.3)] backdrop-blur-xl sm:left-[72px] sm:top-[90px] sm:h-[165px] sm:w-[165px] lg:left-[84px] lg:top-[98px] lg:h-[185px] lg:w-[185px]" />
+  {/* Cloud base */}
+  <div
+    className="
+      absolute
+      bottom-[43px] left-[27px]
+      h-[115px] w-[270px]
+      rounded-[80px]
+      border border-blue-300/35
+      bg-[#0b2c61]/85
+      shadow-[0_0_24px_rgba(59,130,246,0.22),inset_0_0_24px_rgba(96,165,250,0.08)]
+      
+      sm:bottom-[58px] sm:left-[42px]
+      sm:h-[145px] sm:w-[380px]
 
-            {/* Cloud top circle */}
-            <div className="absolute left-[105px] top-[27px] h-[155px] w-[155px] rounded-full border border-blue-300/45 bg-blue-500/15 shadow-[0_0_70px_rgba(59,130,246,0.35)] backdrop-blur-xl sm:left-[150px] sm:top-[40px] sm:h-[210px] sm:w-[210px] lg:left-[175px] lg:top-[42px] lg:h-[235px] lg:w-[235px]" />
+      lg:bottom-[66px] lg:left-[48px]
+      lg:h-[165px] lg:w-[430px]
+    "
+  />
 
-            {/* Cloud right circle */}
-            <div className="absolute right-[38px] top-[82px] h-[115px] w-[115px] rounded-full border border-blue-300/40 bg-blue-500/15 shadow-[0_0_55px_rgba(56,189,248,0.28)] backdrop-blur-xl sm:right-[55px] sm:top-[100px] sm:h-[155px] sm:w-[155px] lg:right-[62px] lg:top-[110px] lg:h-[175px] lg:w-[175px]" />
+  {/* Cloud left circle */}
+  <div
+    className="
+      absolute
+      left-[50px] top-[73px]
+      h-[125px] w-[125px]
+      rounded-full
+      border border-blue-300/30
+      bg-[#0b2c61]/85
+      shadow-[0_0_20px_rgba(37,99,235,0.18),inset_0_0_18px_rgba(96,165,250,0.06)]
 
-            {/* Logo and text */}
-            <div className="relative z-30 flex -translate-y-1 flex-col items-center sm:-translate-y-2">
-              <div className="flex h-28 w-28 items-center justify-center sm:h-36 sm:w-36 lg:h-40 lg:w-40">
-                <img
-                src={awsCloudClubTransparentLogo}
-                alt="AWS Cloud Club Logo"
-                className="
-                h-full
-                w-full
-                object-contain
-                brightness-0
-                invert
-                drop-shadow-[0_0_10px_rgba(255,255,255,0.75)]
-                "
-              />
-              </div>
+      sm:left-[72px] sm:top-[90px]
+      sm:h-[165px] sm:w-[165px]
 
-              <p className="mt-3 whitespace-nowrap text-xs font-bold uppercase tracking-[0.28em] text-blue-200 drop-shadow-[0_0_12px_rgba(96,165,250,0.9)] sm:text-base sm:tracking-[0.36em] lg:text-lg">
-                Build on Cloud
-              </p>
-            </div>
-          </div>
+      lg:left-[84px] lg:top-[98px]
+      lg:h-[185px] lg:w-[185px]
+    "
+  />
+
+  {/* Cloud top circle */}
+  <div
+    className="
+      absolute
+      left-[105px] top-[27px]
+      h-[155px] w-[155px]
+      rounded-full
+      border border-blue-300/35
+      bg-[#0b2c61]/90
+      shadow-[0_0_26px_rgba(59,130,246,0.22),inset_0_0_20px_rgba(96,165,250,0.07)]
+
+      sm:left-[150px] sm:top-[40px]
+      sm:h-[210px] sm:w-[210px]
+
+      lg:left-[175px] lg:top-[42px]
+      lg:h-[235px] lg:w-[235px]
+    "
+  />
+
+  {/* Cloud right circle */}
+  <div
+    className="
+      absolute
+      right-[38px] top-[82px]
+      h-[115px] w-[115px]
+      rounded-full
+      border border-blue-300/30
+      bg-[#0b2c61]/85
+      shadow-[0_0_20px_rgba(56,189,248,0.18),inset_0_0_18px_rgba(96,165,250,0.06)]
+
+      sm:right-[55px] sm:top-[100px]
+      sm:h-[155px] sm:w-[155px]
+
+      lg:right-[62px] lg:top-[110px]
+      lg:h-[175px] lg:w-[175px]
+    "
+  />
+
+  {/* Dark contrast layer behind logo */}
+  <div
+    className="
+      pointer-events-none
+      absolute z-20
+      h-[150px] w-[210px]
+      rounded-full
+      bg-[#04132c]/35
+      blur-[18px]
+
+      sm:h-[190px] sm:w-[270px]
+      lg:h-[210px] lg:w-[300px]
+    "
+  />
+
+  {/* Logo and text */}
+  <div className="relative z-30 flex -translate-y-1 flex-col items-center sm:-translate-y-2">
+    <div className="flex h-28 w-28 items-center justify-center sm:h-36 sm:w-36 lg:h-40 lg:w-40">
+      <img
+        src={awsCloudClubTransparentLogo}
+        alt="AWS Cloud Club Logo"
+        className="
+          h-full
+          w-full
+          object-contain
+          brightness-0
+          invert
+          contrast-125
+          drop-shadow-[0_1px_2px_rgba(0,0,0,0.9)]
+        "
+      />
+    </div>
+
+    <p
+      className="
+        mt-2
+        whitespace-nowrap
+        text-xs
+        font-extrabold
+        uppercase
+        tracking-[0.28em]
+        text-[#dbeafe]
+        [text-shadow:0_1px_2px_rgba(0,0,0,0.95)]
+
+        sm:text-base
+        sm:tracking-[0.36em]
+
+        lg:text-lg
+      "
+    >
+      Build on Cloud
+    </p>
+  </div>
+</div>
 
           {/* Floating members card */}
           <div className="hero-floating-card absolute left-0 top-[5%] z-40 hidden rounded-2xl border border-white/10 bg-black/75 p-4 shadow-2xl backdrop-blur-xl sm:block lg:left-[-3%]">
