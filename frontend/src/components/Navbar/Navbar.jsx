@@ -7,12 +7,19 @@ import {
   Boxes,
   CalendarDays,
   House,
+  LogIn,
+  LogOut,
   Mail,
   Menu,
+  PlusCircle,
+  ShieldCheck,
+  Ticket,
+  User,
   Users,
   X,
 } from "lucide-react";
 
+import { useAuth } from "../../context/AuthContext";
 import cloudClubsLogo from "../../assets/logos/cloud-clubs-logo.png";
 import awsLogo from "../../assets/logos/aws-logo.png";
 
@@ -52,8 +59,9 @@ const navLinks = [
 function Navbar() {
   const navigate = useNavigate();
   const location = useLocation();
+  const { user, isAuthenticated, isTeamMember, isAdmin, logout } = useAuth();
 
-  const isRegistrationPage = location.pathname === "/register";
+  const isRegistrationPage = location.pathname === "/register" || location.pathname === "/join";
   const isHomePage = location.pathname === "/";
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -260,43 +268,102 @@ function Navbar() {
             })}
           </ul>
 
-          {/* Desktop primary button */}
-          {isRegistrationPage ? (
-            <Link
-              to="/"
-              className="hidden items-center gap-3 rounded-full border border-[#ff9900] px-6 py-3 text-sm font-semibold text-[#ff9900] transition-all duration-300 hover:bg-[#ff9900] hover:text-black hover:shadow-[0_0_24px_rgba(255,153,0,0.28)] xl:flex"
-            >
-              <ArrowLeft size={18} />
-              Back to Home
-            </Link>
-          ) : (
-            <Link
-              to="/register"
-              className="hidden items-center gap-3 rounded-full border border-[#ff9900] px-6 py-3 text-sm font-semibold text-[#ff9900] transition-all duration-300 hover:bg-[#ff9900] hover:text-black hover:shadow-[0_0_24px_rgba(255,153,0,0.28)] xl:flex"
-            >
-              Join Club
-              <ArrowRight size={18} />
-            </Link>
-          )}
+          {/* Desktop authentication / role actions */}
+          <div className="hidden items-center gap-3 xl:flex">
+            {!isAuthenticated ? (
+              <>
+                <Link
+                  to="/login"
+                  className="flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2.5 text-xs font-bold text-white transition hover:border-[#ff9900] hover:text-[#ff9900]"
+                >
+                  <LogIn size={15} />
+                  Sign In
+                </Link>
+
+                <Link
+                  to="/register"
+                  className="flex items-center gap-2 rounded-full bg-gradient-to-r from-[#ff5f1f] to-[#ff9900] px-5 py-2.5 text-xs font-black text-black shadow-[0_8px_20px_rgba(255,153,0,0.25)] transition hover:shadow-[0_12px_28px_rgba(255,153,0,0.35)]"
+                >
+                  <ArrowRight size={15} />
+                  Register
+                </Link>
+              </>
+            ) : (
+              <>
+                {(isAdmin || isTeamMember) && (
+                  <>
+                    <Link
+                      to="/admin/events"
+                      className="flex items-center gap-1.5 rounded-full border border-white/15 bg-white/5 px-3.5 py-2 text-xs font-bold text-white transition hover:border-[#ff9900] hover:text-[#ff9900]"
+                    >
+                      <ShieldCheck size={14} className="text-[#ff9900]" />
+                      Organizer Portal
+                    </Link>
+                    <Link
+                      to="/admin/create-event"
+                      className="flex items-center gap-1.5 rounded-full border border-[#ff9900]/40 bg-[#ff9900]/10 px-3.5 py-2 text-xs font-bold text-[#ff9900] transition hover:bg-[#ff9900]/20"
+                    >
+                      <PlusCircle size={14} />
+                      + Event
+                    </Link>
+                  </>
+                )}
+
+                {!isAdmin && !isTeamMember && (
+                  <Link
+                    to="/my-registrations"
+                    className="flex items-center gap-1.5 rounded-full border border-white/15 bg-white/5 px-3.5 py-2 text-xs font-bold text-white transition hover:border-[#ff9900] hover:text-[#ff9900]"
+                  >
+                    <Ticket size={14} className="text-[#ff9900]" />
+                    My Passes
+                  </Link>
+                )}
+
+                {/* User Profile Pill */}
+                <div className="flex items-center gap-2 rounded-full border border-white/10 bg-black/60 py-1 pl-1.5 pr-3 text-xs">
+                  <div className="flex h-7 w-7 items-center justify-center rounded-full bg-[#ff9900] text-xs font-black text-black">
+                    {user?.name ? user.name[0].toUpperCase() : "U"}
+                  </div>
+                  <span className="max-w-[90px] truncate font-semibold text-slate-200">
+                    {user?.name?.split(" ")[0]}
+                  </span>
+                  <span className="rounded bg-white/10 px-1.5 py-0.5 text-[9px] font-black uppercase tracking-wider text-slate-400">
+                    {user?.role === "admin" ? "Admin" : user?.role === "team_member" ? "Team" : "Student"}
+                  </span>
+                </div>
+
+                {/* Logout Button */}
+                <button
+                  type="button"
+                  onClick={() => {
+                    logout();
+                    navigate("/");
+                  }}
+                  title="Sign Out"
+                  className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 text-slate-400 transition hover:border-red-500/50 hover:bg-red-500/10 hover:text-red-400"
+                >
+                  <LogOut size={15} />
+                </button>
+              </>
+            )}
+          </div>
 
           {/* Tablet and mobile actions */}
           <div className="flex items-center gap-2 xl:hidden">
-            {isRegistrationPage ? (
+            {!isAuthenticated ? (
               <Link
-                to="/"
-                className="hidden items-center gap-2 rounded-xl border border-[#ff9900] px-4 py-2.5 text-sm font-semibold text-[#ff9900] transition hover:bg-[#ff9900] hover:text-black sm:flex"
+                to="/login"
+                className="hidden items-center gap-1.5 rounded-xl border border-white/15 px-3.5 py-2 text-xs font-bold text-white transition hover:border-[#ff9900] hover:text-[#ff9900] sm:flex"
               >
-                <ArrowLeft size={17} />
-                Home
+                <LogIn size={14} />
+                Sign In
               </Link>
             ) : (
-              <Link
-                to="/register"
-                className="hidden items-center gap-2 rounded-xl border border-[#ff9900] px-4 py-2.5 text-sm font-semibold text-[#ff9900] transition hover:bg-[#ff9900] hover:text-black sm:flex"
-              >
-                Join
-                <ArrowRight size={17} />
-              </Link>
+              <div className="hidden items-center gap-2 sm:flex">
+                <span className="rounded-lg bg-[#ff9900]/15 px-2.5 py-1 text-xs font-bold text-[#ff9900]">
+                  {user?.name?.split(" ")[0]}
+                </span>
+              </div>
             )}
 
             <button
@@ -361,27 +428,91 @@ function Navbar() {
               </li>
             );
           })}
+
+          {/* Role specific mobile links */}
+          {isAuthenticated && (isAdmin || isTeamMember) && (
+            <>
+              <li className="border-b border-white/10">
+                <Link
+                  to="/admin/events"
+                  onClick={closeMenu}
+                  className="flex w-full items-center gap-4 rounded-lg px-3 py-4 text-left text-base font-medium text-[#ff9900] hover:bg-[#ff9900]/10"
+                >
+                  <ShieldCheck size={22} />
+                  <span>Organizer Dashboard</span>
+                </Link>
+              </li>
+              <li className="border-b border-white/10">
+                <Link
+                  to="/admin/create-event"
+                  onClick={closeMenu}
+                  className="flex w-full items-center gap-4 rounded-lg px-3 py-4 text-left text-base font-medium text-slate-200 hover:bg-white/5"
+                >
+                  <PlusCircle size={22} />
+                  <span>Create New Event</span>
+                </Link>
+              </li>
+            </>
+          )}
+
+          {isAuthenticated && !isAdmin && !isTeamMember && (
+            <li className="border-b border-white/10">
+              <Link
+                to="/my-registrations"
+                onClick={closeMenu}
+                className="flex w-full items-center gap-4 rounded-lg px-3 py-4 text-left text-base font-medium text-[#ff9900] hover:bg-[#ff9900]/10"
+              >
+                <Ticket size={22} />
+                <span>My Registered Passes</span>
+              </Link>
+            </li>
+          )}
         </ul>
 
-        <div className="px-4 pb-5 sm:px-6">
-          {isRegistrationPage ? (
-            <Link
-              to="/"
-              onClick={closeMenu}
-              className="flex w-full items-center justify-center gap-4 rounded-xl bg-[#ff9900] px-5 py-4 font-bold text-black transition hover:bg-[#ffad32]"
-            >
-              <ArrowLeft size={20} />
-              Back to Home
-            </Link>
+        <div className="space-y-3 px-4 pb-5 sm:px-6">
+          {isAuthenticated ? (
+            <div className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-bold text-white">{user?.name}</p>
+                  <p className="text-xs text-slate-400">{user?.email}</p>
+                </div>
+                <span className="rounded bg-[#ff9900]/20 px-2 py-0.5 text-[10px] font-black uppercase text-[#ff9900]">
+                  {user?.role}
+                </span>
+              </div>
+              <button
+                type="button"
+                onClick={() => {
+                  logout();
+                  closeMenu();
+                  navigate("/");
+                }}
+                className="mt-3 flex w-full items-center justify-center gap-2 rounded-lg border border-red-500/30 bg-red-500/10 py-2.5 text-xs font-bold text-red-400 transition hover:bg-red-500/20"
+              >
+                <LogOut size={14} />
+                Sign Out
+              </button>
+            </div>
           ) : (
-            <Link
-              to="/register"
-              onClick={closeMenu}
-              className="flex w-full items-center justify-center gap-4 rounded-xl bg-[#ff9900] px-5 py-4 font-bold text-black transition hover:bg-[#ffad32]"
-            >
-              Join AWS Cloud Club
-              <ArrowRight size={20} />
-            </Link>
+            <div className="grid grid-cols-2 gap-2">
+              <Link
+                to="/login"
+                onClick={closeMenu}
+                className="flex items-center justify-center gap-2 rounded-xl border border-white/15 bg-white/5 py-3 text-xs font-bold text-white transition hover:border-[#ff9900]"
+              >
+                <LogIn size={15} />
+                Sign In
+              </Link>
+              <Link
+                to="/register"
+                onClick={closeMenu}
+                className="flex items-center justify-center gap-2 rounded-xl bg-[#ff9900] py-3 text-xs font-black text-black transition hover:bg-[#ffad32]"
+              >
+                Register
+                <ArrowRight size={15} />
+              </Link>
+            </div>
           )}
         </div>
       </aside>
