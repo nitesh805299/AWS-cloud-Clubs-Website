@@ -196,7 +196,7 @@ function Navbar() {
         }`}
       >
         <nav
-          className={`mx-auto flex max-w-[1500px] items-center justify-between rounded-2xl border px-4 transition-all duration-500 sm:px-6 lg:px-8 ${
+          className={`mx-auto flex max-w-[1500px] items-center justify-between gap-4 lg:gap-6 2xl:gap-8 rounded-2xl border px-4 transition-all duration-500 sm:px-6 lg:px-8 ${
             isScrolled
               ? "h-[74px] border-orange-500/30 bg-black/85 shadow-[0_10px_40px_rgba(255,153,0,0.12),0_1px_0_rgba(255,153,0,0.75)] backdrop-blur-2xl"
               : "h-[82px] border-white/10 bg-black/75 backdrop-blur-xl"
@@ -206,18 +206,18 @@ function Navbar() {
           <button
             type="button"
             onClick={handleBrandClick}
-            className="flex min-w-0 items-center text-left"
+            className="flex shrink-0 items-center text-left"
             aria-label="Go to AWS Cloud Club home"
           >
             <img
               src={cloudClubsLogo}
               alt="AWS Cloud Clubs logo"
-              className="h-[58px] w-[78px] shrink-0 object-contain sm:h-[64px] sm:w-[90px]"
+              className="h-[52px] w-[70px] shrink-0 object-contain sm:h-[60px] sm:w-[84px] lg:h-[64px] lg:w-[90px]"
             />
 
-            <span className="mx-3 h-11 w-px shrink-0 bg-white/20 sm:mx-4" />
+            <span className="mx-2.5 h-10 w-px shrink-0 bg-white/20 sm:mx-3.5 sm:h-11" />
 
-            <div className="flex min-w-0 items-center gap-0">
+            <div className="flex shrink-0 items-center gap-0">
               <img
                 src={awsLogo}
                 alt="AWS"
@@ -225,21 +225,21 @@ function Navbar() {
                   h-10 w-auto shrink-0 object-contain
                   -mr-3
                   sm:h-12 sm:-mr-4
-                  md:h-14 md:-mr-5
-                  lg:mt-1 lg:h-16 lg:-mr-6
-                  xl:mt-2 xl:h-[72px] xl:-mr-7
-                  2xl:mt-2 2xl:h-[78px] 2xl:-mr-8
+                  md:h-13 md:-mr-4
+                  lg:mt-0.5 lg:h-14 lg:-mr-5
+                  xl:mt-0.5 xl:h-14 xl:-mr-5
+                  2xl:mt-1 2xl:h-16 2xl:-mr-6
                 "
               />
 
-              <span className="hidden whitespace-nowrap text-lg font-semibold text-white min-[420px]:block sm:text-xl lg:text-2xl">
+              <span className="hidden whitespace-nowrap text-base font-semibold text-white min-[420px]:block sm:text-lg lg:text-xl 2xl:text-2xl">
                 Cloud clubs
               </span>
             </div>
           </button>
 
           {/* Desktop navigation */}
-          <ul className="hidden items-center gap-7 xl:flex">
+          <ul className="hidden shrink-0 items-center gap-4 xl:gap-5 2xl:gap-7 xl:flex">
             {navLinks.map((link) => {
               const isActive =
                 isHomePage && activeSection === link.sectionId;
@@ -249,7 +249,7 @@ function Navbar() {
                   <button
                     type="button"
                     onClick={() => handleNavClick(link.sectionId)}
-                    className={`relative block py-7 text-sm font-semibold transition-colors duration-300 ${
+                    className={`relative block py-7 text-sm font-semibold whitespace-nowrap transition-colors duration-300 ${
                       isActive
                         ? "text-[#ff9900]"
                         : "text-slate-200 hover:text-[#ff9900]"
@@ -269,7 +269,7 @@ function Navbar() {
           </ul>
 
           {/* Desktop authentication / role actions */}
-          <div className="hidden items-center gap-3 xl:flex">
+          <div className="hidden shrink-0 items-center gap-2 xl:gap-3 xl:flex">
             {!isAuthenticated ? (
               <>
                 <Link

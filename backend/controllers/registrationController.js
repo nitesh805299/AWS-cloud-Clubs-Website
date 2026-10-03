@@ -28,7 +28,7 @@ export const registerForEvent = async (req, res, next) => {
       whyInterested,
     } = req.body;
 
-    // 1. Check required fields
+   
     if (!studentName || !email || !studentNumber || !branch || !year) {
       return res.status(400).json({
         success: false,
@@ -36,7 +36,7 @@ export const registerForEvent = async (req, res, next) => {
       });
     }
 
-    // 2. Validate college email
+
     const emailCheck = validateEmail(email);
     if (!emailCheck.isValid) {
       return res.status(400).json({
@@ -45,7 +45,6 @@ export const registerForEvent = async (req, res, next) => {
       });
     }
 
-    // 3. Validate student roll number
     const rollCheck = validateStudentNumber(studentNumber);
     if (!rollCheck.isValid) {
       return res.status(400).json({
@@ -54,7 +53,7 @@ export const registerForEvent = async (req, res, next) => {
       });
     }
 
-    // 4. Verify Event exists
+   
     const event = await Event.findById(eventId);
     if (!event) {
       return res.status(404).json({
@@ -63,7 +62,6 @@ export const registerForEvent = async (req, res, next) => {
       });
     }
 
-    // Check if registration is open
     if (!event.isRegistrationOpen) {
       return res.status(400).json({
         success: false,
@@ -71,7 +69,6 @@ export const registerForEvent = async (req, res, next) => {
       });
     }
 
-    // Check if registration deadline has passed
     if (event.registrationDeadline && new Date() > new Date(event.registrationDeadline)) {
       return res.status(400).json({
         success: false,
@@ -79,7 +76,6 @@ export const registerForEvent = async (req, res, next) => {
       });
     }
 
-    // 5. Duplicate Prevention Check (database-level query)
     const existingRegistration = await Registration.findOne({
       eventId,
       $or: [
@@ -116,7 +112,6 @@ export const registerForEvent = async (req, res, next) => {
       });
     }
 
-    // 6. Atomic Capacity Check (Prevents race conditions)
     const updatedEvent = await Event.findOneAndUpdate(
       {
         _id: eventId,
@@ -136,7 +131,6 @@ export const registerForEvent = async (req, res, next) => {
 
     seatReserved = true;
 
-    // 7. Associate with user account if logged in or by college email match
     let linkedUserId = req.user ? req.user._id : null;
     if (!linkedUserId && req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
       try {
@@ -154,10 +148,8 @@ export const registerForEvent = async (req, res, next) => {
       if (existingUser) linkedUserId = existingUser._id;
     }
 
-    // 8. Create unique registration tracking ID
     const registrationId = generateUniqueId();
 
-    // 9. Save registration in MongoDB
     const registration = await Registration.create({
       eventId,
       userId: linkedUserId,
@@ -172,7 +164,6 @@ export const registerForEvent = async (req, res, next) => {
       verificationStatus: "VERIFIED",
     });
 
-    // 10. Generate personalized registration ticket QR code
     const ticketPayload = JSON.stringify({
       type: "EVENT_TICKET",
       registrationId: registration.registrationId,
@@ -224,10 +215,6 @@ export const registerForEvent = async (req, res, next) => {
   }
 };
 
-/**
- * @desc   Get all registrations for the currently authenticated student
- * @route  GET /api/registrations/my-registrations
- */
 export const getMyRegistrations = async (req, res, next) => {
   try {
     const orConditions = [
@@ -243,7 +230,7 @@ export const getMyRegistrations = async (req, res, next) => {
       .populate("eventId", "title date startTime endTime venue bannerUrl isRegistrationOpen")
       .sort({ createdAt: -1 });
 
-    // Generate/attach ticket QR code for each
+    // Generate ticket QR code for each
     const populatedWithQr = await Promise.all(
       registrations.map(async (reg) => {
         const ticketPayload = JSON.stringify({
